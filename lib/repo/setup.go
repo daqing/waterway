@@ -5,6 +5,7 @@ import (
 
 	"github.com/daqing/waterway/lib/utils"
 	"github.com/glebarez/sqlite"
+	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -12,10 +13,18 @@ import (
 var __gormDB__ *gorm.DB
 
 func Setup() bool {
-	dbType := utils.GetEnv("DB_TYPE")
-	dbUrl := utils.GetEnv("DB_URL")
+	viper.SetConfigFile("./config/db.yaml")
+
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatalf("can't read config file: %v", err)
+	}
+
+	dbType := viper.GetString("db_type")
+	dbUrl := viper.GetString("db_url")
 
 	if dbType == utils.EMPTY_STRING || dbUrl == utils.EMPTY_STRING {
+		log.Println("db_type or db_url is empty")
+
 		return false
 	}
 
@@ -33,6 +42,8 @@ func Setup() bool {
 	if err != nil {
 		log.Fatalf("failed to create database: %v", err)
 	}
+
+	log.Printf("Initialized database with type: %s and url: %s\n", dbType, dbUrl)
 
 	return true
 }
