@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"errors"
 	"log"
 
 	"github.com/daqing/waterway/lib/utils"
@@ -12,11 +13,15 @@ import (
 
 var __gormDB__ *gorm.DB
 
-func Setup() bool {
+var ErrEmptyConfig = errors.New("database configuration is empty")
+var ErrInvalidDatabaseType = errors.New("database type is invalid")
+var ErrNotSetup = errors.New("database is not setup yet")
+
+func Setup() error {
 	viper.SetConfigFile("./config/db.yaml")
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Fatalf("can't read config file: %v", err)
+		return err
 	}
 
 	dbType := viper.GetString("db_type")
@@ -25,7 +30,7 @@ func Setup() bool {
 	if dbType == utils.EMPTY_STRING || dbUrl == utils.EMPTY_STRING {
 		log.Println("db_type or db_url is empty")
 
-		return false
+		return ErrEmptyConfig
 	}
 
 	var err error
@@ -36,22 +41,23 @@ func Setup() bool {
 	case "pg":
 		__gormDB__, err = gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
 	default:
-		log.Fatalf("unsupported database type: %s with db url: %s", dbType, dbUrl)
+		return ErrInvalidDatabaseType
 	}
 
 	if err != nil {
-		log.Fatalf("failed to create database: %v", err)
+		log.Printf("failed to open database from gorm: %v", err)
+		return err
 	}
 
 	log.Printf("Initialized database with type: %s and url: %s\n", dbType, dbUrl)
 
-	return true
+	return nil
 }
 
-func DB() *gorm.DB {
+func DB() (*gorm.DB, error) {
 	if __gormDB__ == nil {
-		panic("database was not setup")
+		return nil, ErrNotSetup
 	}
 
-	return __gormDB__
+	return __gormDB__, nil
 }

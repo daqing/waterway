@@ -29,7 +29,12 @@ func Find[T TableNameType](fields []string, conds []KVPair) ([]*T, error) {
 func FindLimit[T TableNameType](fields []string, conds []KVPair, orderBy string, offset int, limit int) ([]*T, error) {
 	var t T
 
-	tx := DB().Table(t.TableName()).Select(fields).Where(buildCondQuery(conds))
+	db, err := DB()
+	if err != nil {
+		return nil, err
+	}
+
+	tx := db.Table(t.TableName()).Select(fields).Where(buildCondQuery(conds))
 
 	if orderBy != EMPTY_STRING {
 		tx = tx.Order(orderBy)

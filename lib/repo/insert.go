@@ -18,7 +18,12 @@ func InsertSkipExists[T TableNameType](attributes []KVPair, skipExists bool) (*T
 
 	var t T
 
-	DB().Table(t.TableName()).Create(buildCondQuery(attributes)).Scan(&t)
+	db, err := DB()
+	if err != nil {
+		return nil, err
+	}
+
+	db.Table(t.TableName()).Create(buildCondQuery(attributes)).Scan(&t)
 
 	return &t, nil
 }

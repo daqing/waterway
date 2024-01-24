@@ -38,8 +38,8 @@ func CreateAction(c *gin.Context) {
 		return
 	}
 
-	if !repo.Setup() {
-		api_resp.ErrorCodeMsg(c, 500, "repo setup failed")
+	if err := repo.Setup(); err != nil {
+		api_resp.ErrorCodeMsg(c, 500, err.Error())
 		return
 	}
 
