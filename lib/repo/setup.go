@@ -8,6 +8,15 @@ import (
 
 var Pool *pgxpool.Pool
 
-func Setup() {
+func Setup() bool {
+	dbType := utils.GetEnv("DB_TYPE")
+	dbUrl := utils.GetEnv("DB_URL")
+
+	if dbType == utils.EMPTY_STRING || dbUrl == utils.EMPTY_STRING {
+		return false
+	}
+
 	Pool = clients.NewPGPool(utils.GetEnvMust("WATERWAY_PG_URL"))
+
+	return true
 }

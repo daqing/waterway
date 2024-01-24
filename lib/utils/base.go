@@ -9,7 +9,7 @@ func GenerateApiToken() string {
 }
 
 const SLASH = "/"
-const EMPTY_PATH = ""
+const EMPTY_STRING = ""
 
 // PathPrefix returns the path for an app,
 // regarding the env variable `WATERWAY_MULTI_APP`
@@ -17,13 +17,13 @@ const EMPTY_PATH = ""
 // with "blog" will return "/blog", otherwise it returns
 // empty path
 func PathPrefix(app string) string {
-	multiApp, _ := GetEnv("WATERWAY_MULTI_APP")
+	multiApp := GetEnv("WATERWAY_MULTI_APP")
 
 	if multiApp == "1" {
 		return SLASH + app
 	}
 
-	return EMPTY_PATH
+	return EMPTY_STRING
 }
 
 func FullPath(suffix string) string {

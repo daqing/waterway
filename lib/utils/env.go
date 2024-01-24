@@ -1,23 +1,18 @@
 package utils
 
 import (
-	"fmt"
+	"log"
 	"os"
 )
 
-func GetEnv(key string) (string, error) {
-	v := TrimFull(os.Getenv(key))
-	if v == "" {
-		return "", fmt.Errorf("%s must be set", key)
-	}
-
-	return v, nil
+func GetEnv(key string) string {
+	return TrimFull(os.Getenv(key))
 }
 
 func GetEnvMust(key string) string {
-	val, err := GetEnv(key)
-	if err != nil {
-		panic(err)
+	val := GetEnv(key)
+	if val == EMPTY_STRING {
+		log.Fatalf("missing environment variable: %v", key)
 	}
 
 	return val

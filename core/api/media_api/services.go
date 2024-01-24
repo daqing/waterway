@@ -68,8 +68,8 @@ func AssetHostPath(filename string) string {
 
 	subPath := "/public/assets" + filename
 
-	host, err := utils.GetEnv("WATERWAY_ASSET_HOST")
-	if err != nil {
+	host := utils.GetEnv("WATERWAY_ASSET_HOST")
+	if host == utils.EMPTY_STRING {
 		return subPath
 	}
 
@@ -103,8 +103,8 @@ func DestFilePath(fileHeader *multipart.FileHeader) (destPath string, filePath s
 }
 
 func AssetStorageDir() string {
-	assetDir, err := utils.GetEnv("WATERWAY_STORAGE_DIR")
-	if err != nil {
+	assetDir := utils.GetEnv("WATERWAY_STORAGE_DIR")
+	if assetDir == utils.EMPTY_STRING {
 		// env not set
 		return utils.GetEnvMust("WATERWAY_PWD") + "/public/assets"
 	}

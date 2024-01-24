@@ -7,9 +7,9 @@ func BlogTitle() string {
 }
 
 func BlogTagline() string {
-	tagline, err := utils.GetEnv("AW_BLOG_TAGLINE")
-	if err != nil {
-		return ""
+	tagline := utils.GetEnv("AW_BLOG_TAGLINE")
+	if tagline == utils.EMPTY_STRING {
+		return utils.EMPTY_STRING
 	}
 
 	return tagline
