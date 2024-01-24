@@ -1,25 +1,20 @@
 package payment_api
 
 import (
-	"time"
-
 	"github.com/daqing/waterway/lib/repo"
 )
 
 type Payment struct {
-	Id int64
+	repo.Model
 
-	UserId    int64
+	UserId    repo.IdType
 	UUID      string
 	GoodsType string
-	GoodsId   int64
+	GoodsId   repo.IdType
 	Cent      repo.PriceCent
 	Action    string
 	Note      string
 	Status    PaymentStatus
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "payments"

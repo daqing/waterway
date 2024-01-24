@@ -6,16 +6,17 @@ import (
 	"github.com/daqing/waterway/core/api/post_api"
 	"github.com/daqing/waterway/core/api/user_api"
 	"github.com/daqing/waterway/lib/page_resp"
+	"github.com/daqing/waterway/lib/repo"
 	"github.com/daqing/waterway/lib/utils"
 	"github.com/gin-gonic/gin"
 )
 
 type CreateParams struct {
-	Title      string `form:"title"`
-	CustomPath string `form:"custom_path"`
-	Content    string `form:"content"`
-	Place      string `form:"place"`
-	NodeId     int64  `form:"node_id"`
+	Title      string      `form:"title"`
+	CustomPath string      `form:"custom_path"`
+	Content    string      `form:"content"`
+	Place      string      `form:"place"`
+	NodeId     repo.IdType `form:"node_id"`
 }
 
 func CreateAction(c *gin.Context) {
@@ -44,7 +45,7 @@ func CreateAction(c *gin.Context) {
 
 	admin := user_api.CurrentAdmin(token)
 
-	_, err = post_api.CreatePost(title, customPath, place, content, admin.Id, p.NodeId, 0, []string{})
+	_, err = post_api.CreatePost(title, customPath, place, content, admin.ID, p.NodeId, 0, []string{})
 	if err != nil {
 		page_resp.Error(c, err)
 		return

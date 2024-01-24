@@ -3,7 +3,7 @@ package setting_api
 import "github.com/daqing/waterway/lib/repo"
 
 type SettingResp struct {
-	Id int64
+	Id repo.IdType
 
 	Key string
 	Val string

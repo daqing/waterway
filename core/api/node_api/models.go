@@ -1,20 +1,17 @@
 package node_api
 
-import "time"
+import "github.com/daqing/waterway/lib/repo"
 
 type Node struct {
-	Id int64
+	repo.Model
 
-	ParentId int64
+	ParentId repo.IdType
 
 	Name string
 	Key  string
 
 	Level int
 	Place string
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "nodes"

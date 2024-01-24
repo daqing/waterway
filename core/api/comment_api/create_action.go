@@ -8,9 +8,9 @@ import (
 )
 
 type CreateParams struct {
-	TargetId   int64  `json:"target_id"`
-	TargetType string `json:"target_type"`
-	Content    string `json:"content"`
+	TargetId   repo.IdType `json:"target_id"`
+	TargetType string      `json:"target_type"`
+	Content    string      `json:"content"`
 }
 
 func CreateAction(c *gin.Context) {

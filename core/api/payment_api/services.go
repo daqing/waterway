@@ -17,7 +17,7 @@ func GenerateUUID() string {
 	return strings.Join([]string{PREFIX, ts, "H", rand}, "")
 }
 
-func BuyGoods(userId int64, goods repo.PolyModel, price repo.PriceCent, action, note string) (*Payment, error) {
+func BuyGoods(userId repo.IdType, goods repo.PolyModel, price repo.PriceCent, action, note string) (*Payment, error) {
 	pair := []repo.KVPair{
 		repo.KV("uuid", GenerateUUID()),
 		repo.KV("user_id", userId),

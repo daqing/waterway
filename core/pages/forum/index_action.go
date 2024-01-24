@@ -15,7 +15,7 @@ import (
 )
 
 type PostItem struct {
-	Id        int64
+	ID        repo.IdType
 	Title     string
 	Url       string
 	TimeAgo   string
@@ -25,7 +25,7 @@ type PostItem struct {
 }
 
 type NodeItem struct {
-	Id   int64
+	Id   repo.IdType
 	Name string
 	URL  string
 }
@@ -54,7 +54,7 @@ func IndexAction(c *gin.Context) {
 	postsShow := []*PostItem{}
 
 	for _, post := range posts {
-		url := fmt.Sprintf("/forum/post/%d", post.Id)
+		url := fmt.Sprintf("/forum/post/%d", post.ID)
 
 		if len(post.CustomPath) > 0 {
 			url = fmt.Sprintf("/forum/post/%s", post.CustomPath)
@@ -62,7 +62,7 @@ func IndexAction(c *gin.Context) {
 
 		postsShow = append(postsShow,
 			&PostItem{
-				Id:        post.Id,
+				ID:        post.ID,
 				Title:     post.Title,
 				Url:       url,
 				TimeAgo:   utils.TimeAgo(post.CreatedAt),

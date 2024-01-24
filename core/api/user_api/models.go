@@ -1,14 +1,12 @@
 package user_api
 
 import (
-	"time"
-
 	"github.com/daqing/waterway/core/api/membership_api"
 	"github.com/daqing/waterway/lib/repo"
 )
 
 type User struct {
-	Id int64
+	repo.Model
 
 	Nickname          string
 	Username          string
@@ -19,9 +17,6 @@ type User struct {
 	APIToken          string
 	EncryptedPassword string
 	Balance           repo.PriceCent
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "users"
@@ -41,10 +36,10 @@ const polyType = "user"
 
 func (u *User) PolyType() string { return polyType }
 
-func (u *User) PolyId() int64 { return u.Id }
+func (u *User) PolyId() repo.IdType { return u.ID }
 
 func (u *User) Membership() (*membership_api.MembershipResp, error) {
-	return membership_api.MembershipFor(u.Id)
+	return membership_api.MembershipFor(u.ID)
 }
 
 func (u *User) IsAdmin() bool { return u.Role == AdminRole || u.Role == RootRole }

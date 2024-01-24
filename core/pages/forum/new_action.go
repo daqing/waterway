@@ -31,7 +31,7 @@ func NewAction(c *gin.Context) {
 	for _, node := range nodes {
 		nodeItems = append(nodeItems,
 			&NodeItem{
-				Id:   node.Id,
+				Id:   node.ID,
 				Name: node.Name,
 				URL:  "/forum/node/" + node.Key,
 			})

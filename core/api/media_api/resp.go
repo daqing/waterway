@@ -3,7 +3,7 @@ package media_api
 import "github.com/daqing/waterway/lib/repo"
 
 type MediaResp struct {
-	Id int64
+	Id repo.IdType
 
 	CreatedAt repo.Timestamp
 	UpdatedAt repo.Timestamp

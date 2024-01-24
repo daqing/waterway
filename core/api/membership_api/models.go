@@ -2,17 +2,16 @@ package membership_api
 
 import (
 	"time"
+
+	"github.com/daqing/waterway/lib/repo"
 )
 
 type Membership struct {
-	Id int64
+	repo.Model
 
-	UserId    int64
+	UserId    repo.IdType
 	Name      string
 	ExpiredAt time.Time
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "memberships"

@@ -47,7 +47,7 @@ func InsertSkipExists[T TableNameType](attributes []KVPair, skipExists bool) (*T
 	sql := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s) RETURNING id, created_at, updated_at", t.TableName(), fieldQuery, dollarQuery)
 	row := Pool.QueryRow(context.Background(), sql, values...)
 
-	var id int64
+	var id IdType
 	var createdAt time.Time
 	var updatedAt time.Time
 

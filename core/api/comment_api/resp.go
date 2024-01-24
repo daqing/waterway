@@ -3,9 +3,9 @@ package comment_api
 import "github.com/daqing/waterway/lib/repo"
 
 type CommentResp struct {
-	Id int64
+	Id repo.IdType
 
-	TargetId   int64
+	TargetId   repo.IdType
 	TargetType string
 	Content    string
 

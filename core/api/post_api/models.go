@@ -1,8 +1,6 @@
 package post_api
 
 import (
-	"time"
-
 	"github.com/daqing/waterway/core/api/comment_api"
 	"github.com/daqing/waterway/core/api/node_api"
 	"github.com/daqing/waterway/core/api/user_api"
@@ -10,16 +8,15 @@ import (
 )
 
 type Post struct {
-	Id         int64
-	UserId     int64
-	NodeId     int64
+	repo.Model
+
+	UserId     repo.IdType
+	NodeId     repo.IdType
 	Title      string
 	CustomPath string
 	Place      string
 	Content    string
 	Fee        int
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
 }
 
 const tableName = "posts"
@@ -28,8 +25,8 @@ func (p Post) TableName() string { return tableName }
 
 const polyType = "post"
 
-func (p *Post) PolyId() int64    { return p.Id }
-func (p *Post) PolyType() string { return polyType }
+func (p *Post) PolyId() repo.IdType { return p.ID }
+func (p *Post) PolyType() string    { return polyType }
 
 func (p *Post) User() *user_api.User {
 	user, err := repo.FindRow[user_api.User](

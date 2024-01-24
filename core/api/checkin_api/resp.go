@@ -7,9 +7,9 @@ import (
 )
 
 type CheckinResp struct {
-	Id int64
+	Id repo.IdType
 
-	UserId int64
+	UserId repo.IdType
 
 	Year  int
 	Month time.Month

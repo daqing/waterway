@@ -11,7 +11,7 @@ import (
 )
 
 func SaveFile(
-	userId int64,
+	userId repo.IdType,
 	filename string,
 	mime string,
 	bytes int64,
@@ -20,7 +20,7 @@ func SaveFile(
 }
 
 func SaveFileExpiredAt(
-	userId int64,
+	userId repo.IdType,
 	filename string,
 	mime string,
 	bytes int64,

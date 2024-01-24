@@ -3,7 +3,7 @@ package user_api
 import "github.com/daqing/waterway/lib/repo"
 
 type UserResp struct {
-	Id        int64
+	Id        repo.IdType
 	Nickname  string
 	Username  string
 	ApiToken  string

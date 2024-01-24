@@ -8,7 +8,7 @@ import (
 
 // relation 被关注/收藏/点赞的对象
 // userId 谁发起了这个动作
-func ToggleAction(userId int64, action string, relation repo.PolyModel) (int64, error) {
+func ToggleAction(userId repo.IdType, action string, relation repo.PolyModel) (repo.IdType, error) {
 	var attrs = []repo.KVPair{
 		repo.KV("user_id", userId),
 		repo.KV("action", action),

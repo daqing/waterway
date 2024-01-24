@@ -28,7 +28,7 @@ func Posts(fields []string, place, order string, page, limit int) ([]*Post, erro
 	)
 }
 
-func CreatePost(title, customPath, place, content string, user_id, node_id int64, fee int, tags []string) (*Post, error) {
+func CreatePost(title, customPath, place, content string, user_id, node_id repo.IdType, fee int, tags []string) (*Post, error) {
 	if len(title) == 0 {
 		return nil, fmt.Errorf("title can't be empty")
 	}
@@ -75,7 +75,7 @@ func CreatePost(title, customPath, place, content string, user_id, node_id int64
 	return post, nil
 }
 
-func TogglePostAction(userId int64, action string, postId int64) (int64, error) {
+func TogglePostAction(userId repo.IdType, action string, postId repo.IdType) (repo.IdType, error) {
 	post, err := repo.FindRow[Post]([]string{"id"}, []repo.KVPair{
 		repo.KV("id", postId),
 	})

@@ -32,7 +32,7 @@ func NodeAction(c *gin.Context) {
 	posts, err := repo.Find[post_api.Post](
 		[]string{"id", "title", "user_id"},
 		[]repo.KVPair{
-			repo.KV("node_id", node.Id),
+			repo.KV("node_id", node.ID),
 			repo.KV("place", "forum"),
 		},
 	)
@@ -45,7 +45,7 @@ func NodeAction(c *gin.Context) {
 	postsShow := []*PostItem{}
 
 	for _, post := range posts {
-		url := fmt.Sprintf("/forum/post/%d", post.Id)
+		url := fmt.Sprintf("/forum/post/%d", post.ID)
 
 		if len(post.CustomPath) > 0 {
 			url = fmt.Sprintf("/forum/post/%s", post.CustomPath)
@@ -53,7 +53,7 @@ func NodeAction(c *gin.Context) {
 
 		postsShow = append(postsShow,
 			&PostItem{
-				Id:        post.Id,
+				ID:        post.ID,
 				Title:     post.Title,
 				Url:       url,
 				TimeAgo:   utils.TimeAgo(post.CreatedAt),

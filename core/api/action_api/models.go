@@ -1,17 +1,14 @@
 package action_api
 
-import "time"
+import "github.com/daqing/waterway/lib/repo"
 
 type Action struct {
-	Id int64
+	repo.Model
 
-	UserId     int64
+	UserId     repo.IdType
 	Action     string
 	TargetType string
-	TargetId   int64
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	TargetId   repo.IdType
 }
 
 const ActionLike = "like"

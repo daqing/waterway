@@ -5,7 +5,7 @@ import (
 )
 
 type NodeResp struct {
-	Id int64
+	Id repo.IdType
 
 	Name      string
 	Key       string

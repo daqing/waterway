@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func UpdateFields[T TableNameType](id int64, fields []KVPair) bool {
+func UpdateFields[T TableNameType](id IdType, fields []KVPair) bool {
 	var t T
 
 	condQuery, vals, n := buildCondQuery(fields, 0, comma_sep)

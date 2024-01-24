@@ -23,7 +23,7 @@ func CreateSetting(key string, val string) (*Setting, error) {
 	)
 }
 
-func UpdateSetting(id int64, key string, val string) bool {
+func UpdateSetting(id repo.IdType, key string, val string) bool {
 	return repo.UpdateFields[Setting](id, []repo.KVPair{
 		repo.KV("key", key),
 		repo.KV("val", val),

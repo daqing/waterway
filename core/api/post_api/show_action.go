@@ -7,7 +7,7 @@ import (
 )
 
 type ShowParams struct {
-	Id int64 `form:"id"`
+	ID repo.IdType `form:"id"`
 }
 
 func ShowAction(c *gin.Context) {
@@ -21,7 +21,7 @@ func ShowAction(c *gin.Context) {
 	post, err := repo.FindRow[Post]([]string{
 		"id", "user_id", "node_id", "title", "content",
 	}, []repo.KVPair{
-		repo.KV("id", p.Id),
+		repo.KV("id", p.ID),
 	})
 
 	if err != nil {

@@ -2,19 +2,18 @@ package media_api
 
 import (
 	"time"
+
+	"github.com/daqing/waterway/lib/repo"
 )
 
 type MediaFile struct {
-	Id int64
+	repo.Model
 
-	UserId    int64
+	UserId    repo.IdType
 	Filename  string
 	Mime      string
-	Bytes     int64
+	Bytes     repo.IdType
 	ExpiredAt time.Time
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "media_files"

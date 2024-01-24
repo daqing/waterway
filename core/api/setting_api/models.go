@@ -1,15 +1,12 @@
 package setting_api
 
-import "time"
+import "github.com/daqing/waterway/lib/repo"
 
 type Setting struct {
-	Id int64
+	repo.Model
 
 	Key string
 	Val string
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "settings"

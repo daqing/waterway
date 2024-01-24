@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func Count[T TableNameType](conds []KVPair) (n int64, err error) {
+func Count[T TableNameType](conds []KVPair) (n IdType, err error) {
 	condQuery, values, _ := buildCondQuery(conds, 0, and_sep)
 
 	var t T

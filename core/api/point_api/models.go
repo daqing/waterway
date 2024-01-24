@@ -1,18 +1,13 @@
 package point_api
 
-import (
-	"time"
-)
+import "github.com/daqing/waterway/lib/repo"
 
 // 用户积分
 type Point struct {
-	Id int64
+	repo.Model
 
-	UserId int64
+	UserId repo.IdType
 	Count  int
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "points"

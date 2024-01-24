@@ -11,7 +11,7 @@ import (
 )
 
 type ToggleFollowParams struct {
-	UserId int64 `form:"id"`
+	UserId repo.IdType `form:"id"`
 }
 
 func ToggleFollowAction(c *gin.Context) {
@@ -44,7 +44,7 @@ func ToggleFollowAction(c *gin.Context) {
 		return
 	}
 
-	count, err := action_api.ToggleAction(currentUser.Id, action_api.ActionFavorite, user)
+	count, err := action_api.ToggleAction(currentUser.ID, action_api.ActionFavorite, user)
 
 	if err != nil {
 		api_resp.LogError(c, err)

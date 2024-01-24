@@ -1,23 +1,18 @@
 package comment_api
 
 import (
-	"time"
-
 	"github.com/daqing/waterway/core/api/user_api"
 	"github.com/daqing/waterway/lib/repo"
 )
 
 type Comment struct {
-	Id int64
+	repo.Model
 
-	UserId int64
+	UserId repo.IdType
 
-	TargetId   int64
+	TargetId   repo.IdType
 	TargetType string
 	Content    string
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "comments"

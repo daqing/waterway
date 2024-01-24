@@ -24,6 +24,8 @@ const and_sep Separator = " AND "
 const or_sep Separator = " OR "
 const comma_sep Separator = ", "
 
+type IdType int64
+
 type KVPair interface {
 	Key() string
 	Value() any
@@ -161,9 +163,15 @@ func buildCondQuery(conds []KVPair, start int, sep Separator) (condQuery string,
 	return
 }
 
+type Model struct {
+	ID        IdType `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+
 // Polymorphic model
 type PolyModel interface {
-	PolyId() int64
+	PolyId() IdType
 	PolyType() string
 }
 

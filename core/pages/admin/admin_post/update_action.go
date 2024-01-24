@@ -10,12 +10,12 @@ import (
 )
 
 type UpdateParams struct {
-	Id         int64  `form:"id"`
-	Title      string `form:"title"`
-	Content    string `form:"content"`
-	Place      string `form:"place"`
-	NodeId     string `form:"node_id"`
-	CustomPath string `form:"custom_path"`
+	ID         repo.IdType `form:"id"`
+	Title      string      `form:"title"`
+	Content    string      `form:"content"`
+	Place      string      `form:"place"`
+	NodeId     string      `form:"node_id"`
+	CustomPath string      `form:"custom_path"`
 }
 
 func UpdateAction(c *gin.Context) {
@@ -27,7 +27,7 @@ func UpdateAction(c *gin.Context) {
 	}
 
 	ok := repo.UpdateFields[post_api.Post](
-		p.Id,
+		p.ID,
 		[]repo.KVPair{
 			repo.KV("title", p.Title),
 			repo.KV("content", p.Content),
@@ -38,7 +38,7 @@ func UpdateAction(c *gin.Context) {
 	)
 
 	if !ok {
-		page_resp.Error(c, fmt.Errorf("error updating post with id: %d", p.Id))
+		page_resp.Error(c, fmt.Errorf("error updating post with id: %d", p.ID))
 		return
 	}
 

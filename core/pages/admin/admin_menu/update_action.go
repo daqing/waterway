@@ -5,15 +5,16 @@ import (
 
 	"github.com/daqing/waterway/core/api/menu_api"
 	"github.com/daqing/waterway/lib/page_resp"
+	"github.com/daqing/waterway/lib/repo"
 	"github.com/daqing/waterway/lib/utils"
 	"github.com/gin-gonic/gin"
 )
 
 type UpdateParams struct {
-	Id    int64  `form:"id"`
-	Name  string `form:"name"`
-	URL   string `form:"url"`
-	Place string `form:"place"`
+	ID    repo.IdType `form:"id"`
+	Name  string      `form:"name"`
+	URL   string      `form:"url"`
+	Place string      `form:"place"`
 }
 
 func UpdateAction(c *gin.Context) {
@@ -24,7 +25,7 @@ func UpdateAction(c *gin.Context) {
 		return
 	}
 
-	id := p.Id
+	id := p.ID
 	name := utils.TrimFull(p.Name)
 	url := utils.TrimFull(p.URL)
 	place := utils.TrimFull(p.Place)
