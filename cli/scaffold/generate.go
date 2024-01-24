@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/daqing/waterway/cli/generator"
 	"github.com/daqing/waterway/cli/helper"
@@ -141,8 +142,13 @@ func Generate(xargs []string) {
 
 	sf.generate()
 
-	path := generator.GenerateMigration("create_" + sf.Lower + "_table")
+	var path string
+	ts := time.Now().Format("20060102150405")
 
+	path = generator.GenerateMigration("pg", ts, "create_"+sf.Lower+"_table")
+	sf.genTableSQL(path)
+
+	path = generator.GenerateMigration("sqlite3", ts, "create_"+sf.Lower+"_table")
 	sf.genTableSQL(path)
 }
 

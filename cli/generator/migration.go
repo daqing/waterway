@@ -13,13 +13,14 @@ func GenMigration(xargs []string) {
 		helper.Help("cli g migration [name]")
 	}
 
-	fmt.Println(GenerateMigration(xargs[0]))
-}
-
-func GenerateMigration(name string) string {
 	ts := time.Now().Format("20060102150405")
 
-	targetPath := fmt.Sprintf("./db/%s_%s.sql", ts, name)
+	fmt.Println(GenerateMigration("pg", ts, xargs[0]))
+	fmt.Println(GenerateMigration("sqlite3", ts, xargs[0]))
+}
+
+func GenerateMigration(dir, ts, name string) string {
+	targetPath := fmt.Sprintf("./db/%s/%s_%s.sql", dir, ts, name)
 	if _, err := os.Stat(targetPath); err == nil {
 		// target file exists
 		fmt.Println("target file exists")
