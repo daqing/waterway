@@ -14,7 +14,7 @@ func CreateMenu(name, url, place string) (menu *Menu, err error) {
 	)
 }
 
-func UpdateMenu(id int64, name, url, place string) bool {
+func UpdateMenu(id repo.IdType, name, url, place string) bool {
 	return repo.UpdateFields[Menu](
 		id,
 		[]repo.KVPair{

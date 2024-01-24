@@ -4,7 +4,7 @@ import (
 	"github.com/daqing/waterway/lib/repo"
 )
 
-func CreateNode(name, key, place string, parentId int64, level int) (*Node, error) {
+func CreateNode(name, key, place string, parentId repo.IdType, level int) (*Node, error) {
 	return repo.Insert[Node](
 		[]repo.KVPair{
 			repo.KV("name", name),
@@ -30,7 +30,7 @@ func Nodes(fields []string, order string, page, limit int) ([]*Node, error) {
 	)
 }
 
-func NameMap(place string) (map[int64]string, error) {
+func NameMap(place string) (map[repo.IdType]string, error) {
 	nodes, err := repo.Find[Node](
 		[]string{"id", "name"},
 		[]repo.KVPair{
@@ -42,10 +42,10 @@ func NameMap(place string) (map[int64]string, error) {
 		return nil, err
 	}
 
-	var result = make(map[int64]string)
+	var result = make(map[repo.IdType]string)
 
 	for _, node := range nodes {
-		result[node.Id] = node.Name
+		result[node.ID] = node.Name
 	}
 
 	return result, nil

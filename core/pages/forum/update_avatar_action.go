@@ -37,7 +37,7 @@ func UpdateAvatarAction(c *gin.Context) {
 	c.SaveUploadedFile(fileHeader, destPath)
 
 	ok := repo.UpdateFields[user_api.User](
-		currentUser.Id,
+		currentUser.ID,
 		[]repo.KVPair{
 			repo.KV("avatar", filePath),
 		},

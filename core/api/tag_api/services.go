@@ -41,7 +41,7 @@ func CreateTagRelation(tagName string, relation repo.PolyModel) error {
 	}
 
 	relations, err := repo.Find[TagRelation]([]string{"id"}, []repo.KVPair{
-		repo.KV("tag_id", tag.Id),
+		repo.KV("tag_id", tag.ID),
 		repo.KV("relation_id", relation.PolyId()),
 		repo.KV("relation_type", relation.PolyType()),
 	})
@@ -53,7 +53,7 @@ func CreateTagRelation(tagName string, relation repo.PolyModel) error {
 	if len(relations) == 0 {
 		// create new relation
 		_, err = repo.Insert[TagRelation]([]repo.KVPair{
-			repo.KV("tag_id", tag.Id),
+			repo.KV("tag_id", tag.ID),
 			repo.KV("relation_id", relation.PolyId()),
 			repo.KV("relation_type", relation.PolyType()),
 		})

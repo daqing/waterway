@@ -46,7 +46,7 @@ func (ft FieldType) SQLType() string {
 		return "VARCHAR(255) NOT NULL"
 	case "int":
 		return "INT NOT NULL"
-	case "int64":
+	case "repo.IdType":
 		return "BIGINT NOT NULL"
 	case "bool":
 		return "BOOLEAN NOT NULL"
@@ -63,7 +63,7 @@ func LogError(prefix string, err error) {
 }
 
 func (ft FieldType) SkipTrim() bool {
-	return ft.Type == "int64"
+	return ft.Type == "repo.IdType"
 }
 
 func (sf *Scaffold) FieldTypes() []FieldType {
@@ -125,7 +125,7 @@ func Generate(xargs []string) {
 			typ = parts[1]
 
 			if typ == "bigint" {
-				typ = "int64"
+				typ = "repo.IdType"
 			}
 
 			if strings.Contains(pair, "unique") {

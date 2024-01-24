@@ -1,14 +1,11 @@
 package tag_api
 
-import "time"
+import "github.com/daqing/waterway/lib/repo"
 
 type Tag struct {
-	Id int64
+	repo.Model
 
 	Name string
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "tags"
@@ -16,9 +13,9 @@ const tableName = "tags"
 func (t Tag) TableName() string { return tableName }
 
 type TagRelation struct {
-	TagId        int64
+	TagId        repo.IdType
 	RelationType string
-	RelationId   int64
+	RelationId   repo.IdType
 }
 
 const relationTableName = "tag_relation"

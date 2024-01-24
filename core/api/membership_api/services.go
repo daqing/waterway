@@ -7,7 +7,7 @@ import (
 	"github.com/daqing/waterway/lib/repo"
 )
 
-func AddMembership(userId int64, membershipType MembershipType, expiredAt time.Time) error {
+func AddMembership(userId repo.IdType, membershipType MembershipType, expiredAt time.Time) error {
 	// check if user already has membership
 	exists, err := repo.Exists[Membership](
 		[]repo.KVPair{
@@ -32,7 +32,7 @@ func AddMembership(userId int64, membershipType MembershipType, expiredAt time.T
 	return err
 }
 
-func MembershipFor(userId int64) (*MembershipResp, error) {
+func MembershipFor(userId repo.IdType) (*MembershipResp, error) {
 	row, err := repo.FindRow[Membership](
 		[]string{"name", "expired_at"},
 		[]repo.KVPair{

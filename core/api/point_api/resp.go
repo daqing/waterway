@@ -3,9 +3,9 @@ package point_api
 import "github.com/daqing/waterway/lib/repo"
 
 type PointResp struct {
-	Id int64
+	Id repo.IdType
 
-	UserId int64
+	UserId repo.IdType
 	Count  int
 
 	CreatedAt repo.Timestamp

@@ -11,10 +11,10 @@ import (
 )
 
 type CreateSubParams struct {
-	ParentId int64  `form:"parent_id"`
-	Name     string `form:"name"`
-	Key      string `form:"key"`
-	Place    string `form:"place"`
+	ParentId repo.IdType `form:"parent_id"`
+	Name     string      `form:"name"`
+	Key      string      `form:"key"`
+	Place    string      `form:"place"`
 }
 
 func CreateSubAction(c *gin.Context) {
@@ -44,7 +44,7 @@ func CreateSubAction(c *gin.Context) {
 		return
 	}
 
-	_, err = node_api.CreateNode(name, key, place, parentNode.Id, parentNode.Level+1)
+	_, err = node_api.CreateNode(name, key, place, parentNode.ID, parentNode.Level+1)
 
 	if err != nil {
 		page_resp.Error(c, err)

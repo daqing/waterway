@@ -10,10 +10,10 @@ import (
 )
 
 type UpdateParams struct {
-	Id    int64  `form:"id"`
-	Name  string `form:"name"`
-	Key   string `form:"key"`
-	Place string `form:"place"`
+	ID    repo.IdType `form:"id"`
+	Name  string      `form:"name"`
+	Key   string      `form:"key"`
+	Place string      `form:"place"`
 }
 
 func UpdateAction(c *gin.Context) {
@@ -24,7 +24,7 @@ func UpdateAction(c *gin.Context) {
 		return
 	}
 
-	ok := repo.UpdateFields[node_api.Node](p.Id,
+	ok := repo.UpdateFields[node_api.Node](p.ID,
 		[]repo.KVPair{
 			repo.KV("name", p.Name),
 			repo.KV("key", p.Key),

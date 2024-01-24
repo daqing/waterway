@@ -1,20 +1,21 @@
 package checkin_api
 
-import "time"
+import (
+	"time"
+
+	"github.com/daqing/waterway/lib/repo"
+)
 
 type Checkin struct {
-	Id int64
+	repo.Model
 
-	UserId int64
+	UserId repo.IdType
 
 	Year  int
 	Month time.Month
 	Day   int
 
 	Acc int // 连续签到次数
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "checkin"

@@ -158,7 +158,7 @@ func Users(fields []string, order string, page, limit int) ([]*User, error) {
 	)
 }
 
-func Nickname(id int64) string {
+func Nickname(id repo.IdType) string {
 	user, err := repo.FindRow[User](
 		[]string{"id", "nickname"},
 		[]repo.KVPair{

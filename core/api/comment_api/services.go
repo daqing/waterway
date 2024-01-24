@@ -9,9 +9,9 @@ func CreateComment(currentUser *user_api.User, polyModel repo.PolyModel, content
 	return createComment(currentUser, polyModel.PolyType(), polyModel.PolyId(), content)
 }
 
-func createComment(currentUser *user_api.User, targetType string, targetId int64, content string) (*Comment, error) {
+func createComment(currentUser *user_api.User, targetType string, targetId repo.IdType, content string) (*Comment, error) {
 	return repo.Insert[Comment]([]repo.KVPair{
-		repo.KV("user_id", currentUser.Id),
+		repo.KV("user_id", currentUser.ID),
 		repo.KV("target_type", targetType),
 		repo.KV("target_id", targetId),
 		repo.KV("content", content),

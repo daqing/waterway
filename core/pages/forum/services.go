@@ -11,9 +11,9 @@ func ForumTitle() string {
 }
 
 func ForumTagline() string {
-	tagline, err := utils.GetEnv("AW_FORUM_TAGLINE")
-	if err != nil {
-		return ""
+	tagline := utils.GetEnv("AW_FORUM_TAGLINE")
+	if tagline == utils.EMPTY_STRING {
+		return utils.EMPTY_STRING
 	}
 
 	return tagline

@@ -3,9 +3,9 @@ package post_api
 import "github.com/daqing/waterway/lib/repo"
 
 type PostResp struct {
-	Id         int64
-	UserId     int64
-	NodeId     int64
+	Id         repo.IdType
+	UserId     repo.IdType
+	NodeId     repo.IdType
 	Title      string
 	CustomPath string
 	Place      string

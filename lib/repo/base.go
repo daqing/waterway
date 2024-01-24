@@ -7,9 +7,9 @@ import (
 	"time"
 )
 
-const eq_op = "="
-const in_op = "IN"
-const or_op = "OR"
+const op_eq = "="
+const op_in = "IN"
+const op_or = "OR"
 
 var ErrorNotFound = errors.New("record_not_found")
 var ErrorCountNotMatch = errors.New("count_not_match")
@@ -20,9 +20,9 @@ const InvalidCount = -1
 
 type Separator string
 
-const and_sep Separator = " AND "
-const or_sep Separator = " OR "
 const comma_sep Separator = ", "
+
+type IdType int64
 
 type KVPair interface {
 	Key() string
@@ -48,7 +48,7 @@ func (attr *Attribute) Value() any {
 }
 
 func (attr *Attribute) Operator() string {
-	return eq_op
+	return op_eq
 }
 
 const EMPTY_STRING = ""
@@ -72,7 +72,7 @@ func (or *OrQuery) Value() any {
 }
 
 func (or *OrQuery) Operator() string {
-	return or_op
+	return op_or
 }
 
 func OR(pairs ...KVPair) *OrQuery {
@@ -102,68 +102,29 @@ func (in *InQuery[T]) Value() any {
 	return strings.Join(result, string(comma_sep))
 }
 
-func (in *InQuery[T]) Operator() string { return in_op }
+func (in *InQuery[T]) Operator() string { return op_in }
 
-// return the next available dollar sign
-//
-// e.g buildCondQuery([]KVPair{KV("foo", "bar")}, 0, AND) will return dollar value as 2
-func buildCondQuery(conds []KVPair, start int, sep Separator) (condQuery string, values []any, dollar int) {
-	if len(conds) == 0 {
-		return "1=1", nil, 0
-	}
+func buildCondQuery(kvpairs []KVPair) map[string]any {
+	result := make(map[string]any)
 
-	dollar = start
-	var condString = []string{}
-
-	for _, cond := range conds {
-
-		var part string
-
-		switch cond.Operator() {
-		case in_op:
-			dollar++
-			part = fmt.Sprintf("%s IN ($%d)", cond.Key(), dollar)
-
-			values = append(values, cond.Value())
-		case or_op:
-			if or, ok := cond.(*OrQuery); ok {
-				var subParts []string
-
-				for _, subCond := range or.Pairs {
-					dollar++
-
-					subParts = append(
-						subParts,
-						fmt.Sprintf("%s %s $%d", subCond.Key(), subCond.Operator(), dollar),
-					)
-
-					values = append(values, subCond.Value())
-				}
-
-				part = strings.Join(subParts, string(or_sep))
-			} else {
-				panic("invalid OR query")
-			}
-
-		default:
-			dollar++
-			part = fmt.Sprintf("%s %s $%d", cond.Key(), cond.Operator(), dollar)
-
-			values = append(values, cond.Value())
+	for _, kv := range kvpairs {
+		if kv.Operator() == op_eq {
+			result[kv.Key()] = kv.Value()
 		}
-
-		condString = append(condString, part)
 	}
 
-	condQuery = strings.Join(condString, string(sep))
-	dollar++
+	return result
+}
 
-	return
+type Model struct {
+	ID        IdType `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 // Polymorphic model
 type PolyModel interface {
-	PolyId() int64
+	PolyId() IdType
 	PolyType() string
 }
 

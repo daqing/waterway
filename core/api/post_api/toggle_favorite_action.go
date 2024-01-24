@@ -4,11 +4,12 @@ import (
 	"github.com/daqing/waterway/core/api/action_api"
 	"github.com/daqing/waterway/core/api/user_api"
 	"github.com/daqing/waterway/lib/api_resp"
+	"github.com/daqing/waterway/lib/repo"
 	"github.com/gin-gonic/gin"
 )
 
 type ToggleFavoriteParams struct {
-	PostId int64 `form:"id"`
+	PostId repo.IdType `form:"id"`
 }
 
 func ToggleFavoriteAction(c *gin.Context) {
@@ -25,7 +26,7 @@ func ToggleFavoriteAction(c *gin.Context) {
 		return
 	}
 
-	count, err := TogglePostAction(user.Id, action_api.ActionFavorite, p.PostId)
+	count, err := TogglePostAction(user.ID, action_api.ActionFavorite, p.PostId)
 	if err != nil {
 		api_resp.LogError(c, err)
 		return

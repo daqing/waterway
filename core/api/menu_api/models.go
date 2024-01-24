@@ -1,17 +1,13 @@
 package menu_api
 
-import (
-	"time"
-)
+import "github.com/daqing/waterway/lib/repo"
 
 type Menu struct {
-	Id    int64
+	repo.Model
+
 	Name  string
 	URL   string
 	Place string
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 const tableName = "menus"

@@ -13,9 +13,9 @@ import (
 )
 
 type CreateParams struct {
-	Title   string `form:"title"`
-	Content string `form:"content"`
-	NodeId  int64  `form:"node_id"`
+	Title   string      `form:"title"`
+	Content string      `form:"content"`
+	NodeId  repo.IdType `form:"node_id"`
 }
 
 func CreateAction(c *gin.Context) {
@@ -56,7 +56,7 @@ func CreateAction(c *gin.Context) {
 	_, err = post_api.CreatePost(
 		title, "", "forum",
 		content,
-		currentUser.Id, p.NodeId,
+		currentUser.ID, p.NodeId,
 		0,
 		[]string{},
 	)
