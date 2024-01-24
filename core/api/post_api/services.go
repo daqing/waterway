@@ -75,7 +75,7 @@ func CreatePost(title, customPath, place, content string, user_id, node_id repo.
 	return post, nil
 }
 
-func TogglePostAction(userId repo.IdType, action string, postId repo.IdType) (repo.IdType, error) {
+func TogglePostAction(userId repo.IdType, action string, postId repo.IdType) (int64, error) {
 	post, err := repo.FindRow[Post]([]string{"id"}, []repo.KVPair{
 		repo.KV("id", postId),
 	})

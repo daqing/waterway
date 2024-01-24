@@ -4,7 +4,7 @@ import "os"
 
 var env = TrimFull(os.Getenv("WATERWAY_ENV"))
 
-const LOCAL_ENV = "local"
+const PRODUCTION_ENV = "production"
 
 type appConfig struct {
 	IsLocal bool
@@ -12,7 +12,7 @@ type appConfig struct {
 }
 
 var defaultConfig = &appConfig{
-	IsLocal: env == LOCAL_ENV,
+	IsLocal: env != PRODUCTION_ENV,
 	Env:     env,
 }
 

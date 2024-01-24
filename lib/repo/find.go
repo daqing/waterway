@@ -1,15 +1,5 @@
 package repo
 
-import (
-	"context"
-	"fmt"
-	"log"
-	"reflect"
-	"strings"
-
-	"github.com/jackc/pgx/v5"
-)
-
 func FindRow[T TableNameType](fields []string, conds []KVPair) (*T, error) {
 	rows, err := Find[T](fields, conds)
 	if err != nil {
@@ -37,67 +27,26 @@ func Find[T TableNameType](fields []string, conds []KVPair) ([]*T, error) {
 
 // limit = 0 means no limit
 func FindLimit[T TableNameType](fields []string, conds []KVPair, orderBy string, offset int, limit int) ([]*T, error) {
-	var _t T // only used for get table name
+	var t T
 
-	condQuery, values, _ := buildCondQuery(conds, 0, and_sep)
+	tx := DB().Table(t.TableName()).Select(fields).Where(buildCondQuery(conds))
 
-	fields = append(fields, "created_at", "updated_at")
-	fieldsQuery := strings.Join(fields, ", ")
+	if orderBy != EMPTY_STRING {
+		tx = tx.Order(orderBy)
+	}
 
-	var sql string
 	if limit > 0 {
-		sql = fmt.Sprintf("SELECT %s FROM %s WHERE %s order by %s offset %d limit %d", fieldsQuery, _t.TableName(), condQuery, orderBy, offset, limit)
-	} else if len(orderBy) > 0 {
-		sql = fmt.Sprintf("SELECT %s FROM %s WHERE %s ORDER BY %s", fieldsQuery, _t.TableName(), condQuery, orderBy)
-	} else {
-		sql = fmt.Sprintf("SELECT %s FROM %s WHERE %s", fieldsQuery, _t.TableName(), condQuery)
+		tx = tx.Limit(limit)
 	}
 
-	return execSQL[T](sql, fields, values)
-
-}
-
-func execSQL[T TableNameType](sql string, fields []string, values []any) ([]*T, error) {
-	rows, err := Pool.Query(context.Background(), sql, values...)
-
-	var ms []*T
-
-	if err != nil {
-		log.Println("[repo.Find] Conn.Query error:", err)
-		return ms, err
+	if offset > 0 {
+		tx = tx.Offset(offset)
 	}
 
-	defer rows.Close()
+	var records []*T
 
-	for rows.Next() {
-		var m = new(T)
+	tx.Find(&records)
 
-		err := scanRows(rows, fields, m)
-		if err != nil {
-			log.Println("[repo.FindLimit] scanRows error:", err, "fields:", fields)
-			return ms, err
-		}
+	return records, nil
 
-		ms = append(ms, m)
-	}
-
-	return ms, nil
-}
-
-func scanRows(rows pgx.Rows, fields []string, dest any) error {
-	vDest := reflect.ValueOf(dest).Elem()
-	destSlice := make([]interface{}, 0)
-
-	for _, name := range fields {
-		camelName := ToCamel(name)
-		var f = vDest.FieldByName(camelName).Addr().Interface()
-
-		destSlice = append(destSlice, f)
-	}
-
-	if err := rows.Scan(destSlice...); err != nil {
-		return err
-	}
-
-	return nil
 }

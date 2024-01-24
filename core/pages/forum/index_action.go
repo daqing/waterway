@@ -25,7 +25,7 @@ type PostItem struct {
 }
 
 type NodeItem struct {
-	Id   repo.IdType
+	ID   repo.IdType
 	Name string
 	URL  string
 }
