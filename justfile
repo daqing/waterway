@@ -40,16 +40,30 @@ push:
   docker tag waterway_db reg.appmz.cn/daqing/waterway_db
   docker push reg.appmz.cn/daqing/waterway_db
 
-migrate:
+migrate_pg:
   find db/*.sql | xargs -I{} psql -U $POSTGRES_USER -d waterway -f {}
 
-createdb:
+migrate_sq:
+  find db/*.sql -exec sh -c 'sqlite3 waterway.sqlite3 < {}' \;
+
+create_pg:
   psql -U $POSTGRES_USER -d postgres -c "create database waterway"
 
-dropdb:
+create_sq:
+  touch waterway.sqlite3
+
+drop_pg:
   psql -U $POSTGRES_USER -d postgres -c "drop database waterway"
 
-resetdb: dropdb createdb migrate
+drop_sq:
+  rm waterway.sqlite3
 
-db:
+reset_pg: drop_pg create_pg migrate_pg
+
+reset_sq: drop_sq create_sq migrate_sq
+
+db_pg:
   psql -U $POSTGRES_USER -d waterway
+
+db_sq:
+  sqlite3 waterway.sqlite3
