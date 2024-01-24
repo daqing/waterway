@@ -19,6 +19,7 @@ import (
 	"github.com/daqing/waterway/core/pages/session_page"
 	"github.com/daqing/waterway/core/pages/up_page"
 	"github.com/daqing/waterway/ext/api/ext_date_api"
+	"github.com/daqing/waterway/ext/api/ext_setup_api"
 	"github.com/gin-gonic/gin"
 )
 
@@ -73,4 +74,5 @@ func extAPIRoutes(r *gin.Engine) {
 	v1 := r.Group("/api/v1")
 
 	ext_date_api.Routes(v1)
+	ext_setup_api.Routes(v1)
 }
