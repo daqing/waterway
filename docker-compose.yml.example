@@ -1,0 +1,47 @@
+version: "3.1"
+services:
+  traefik:
+    image: traefik:v2.3
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.docker.exposedbydefault=false"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=daqing@mzevo.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ssl:/letsencrypt
+
+  waterway:
+    image: "waterway"
+    restart: "always"
+    environment:
+      WATERWAY_PG_URL: "postgres://postgres:abc123456@waterway_db:5432/waterway"
+      AW_BLOG_TITLE: ""
+      WATERWAY_MULTI_APP: "1"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.waterway.rule=Host(`waterway.example.com`)"
+      - "traefik.http.routers.waterway.entrypoints=websecure"
+      - "traefik.http.routers.waterway.tls.certresolver=myresolver"
+      - "traefik.http.services.waterway.loadbalancer.server.port=2000"
+
+  waterway_db:
+    image: "waterway_db"
+    restart: "always"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: waterway
+      POSTGRES_PASSWORD: abc123456
+    volumes:
+      - pg:/var/lib/postgresql/data
+
+volumes:
+  ssl:
+  pg:

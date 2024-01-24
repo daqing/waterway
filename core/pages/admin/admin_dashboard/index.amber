@@ -1,0 +1,7 @@
+extends /views/admin/layout
+
+block title
+  | Dashboard
+
+block content
+  h1 Hello, dashboard#Index
