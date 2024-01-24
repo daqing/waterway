@@ -41,10 +41,10 @@ push:
   docker push reg.appmz.cn/daqing/waterway_db
 
 migrate_pg:
-  find db/*.sql | xargs -I{} psql -U $POSTGRES_USER -d waterway -f {}
+  find db/pg/*.sql | xargs -I{} psql -U $POSTGRES_USER -d waterway -f {}
 
 migrate_sq:
-  find db/*.sql -exec sh -c 'sqlite3 waterway.sqlite3 < {}' \;
+  find db/sqlite3/*.sql -exec sh -c 'sqlite3 waterway.sqlite3 < {}' \;
 
 create_pg:
   psql -U $POSTGRES_USER -d postgres -c "create database waterway"
