@@ -36,5 +36,5 @@ This file defines a few environment variables:
   **the full path to store the uploaded files**
 - WATERWAY_ASSET_HOST
   **the CDN url for serving assets**
-- WATERWAY_PWD
+- APP_PWD
   **the path to current working directory**

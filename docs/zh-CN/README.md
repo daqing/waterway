@@ -92,7 +92,7 @@ $ cp .env.example .env
 
   * 例如: `https://assets.example.com"`
 
-* WATERWAY_PWD
+* APP_PWD
 
   * 项目所在的绝对路径（不要以'/'结尾）
 
@@ -159,7 +159,7 @@ COPY ./public /app/public
 
 ENV WATERWAY_ENV=production
 ENV WATERWAY_PORT=2000
-ENV WATERWAY_PWD=/app
+ENV APP_PWD=/app
 
 ENV AW_ASSET_VERSION=1
 ENV TZ="Asia/Shanghai"

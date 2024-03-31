@@ -106,7 +106,7 @@ func AssetStorageDir() string {
 	assetDir := utils.GetEnv("WATERWAY_STORAGE_DIR")
 	if assetDir == utils.EMPTY_STRING {
 		// env not set
-		return utils.GetEnvMust("WATERWAY_PWD") + "/public/assets"
+		return utils.GetEnvMust("APP_PWD") + "/public/assets"
 	}
 
 	return assetDir

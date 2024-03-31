@@ -17,8 +17,9 @@ COPY ./public /app/public
 
 ENV WATERWAY_ENV=production
 ENV WATERWAY_PORT=2000
-ENV WATERWAY_PWD=/app
-ENV AMBER_ROOT_DIR=/app
+
+ENV APP_PWD=/app
+
 
 ENV AW_ASSET_VERSION=1
 ENV TZ="Asia/Shanghai"
